@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: bc-pos-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: bc_pos_user
+      POSTGRES_PASSWORD: bc_pos_password
+      POSTGRES_DB: bc_pos
+    ports:
+      - "5432:5432"
+    volumes:
+      - bc_pos_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bc_pos_user -d bc_pos"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  bc_pos_postgres_data:

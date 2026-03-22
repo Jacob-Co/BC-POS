@@ -1,0 +1,45 @@
+CREATE TABLE IF NOT EXISTS users (
+  id TEXT PRIMARY KEY,
+  first_name TEXT NOT NULL,
+  last_name TEXT NOT NULL,
+  password TEXT NOT NULL DEFAULT '',
+  email TEXT NOT NULL UNIQUE,
+  is_admin BOOLEAN NOT NULL DEFAULT FALSE,
+  login_type TEXT NOT NULL,
+  last_used_token TEXT NOT NULL DEFAULT '',
+  item_password TEXT NOT NULL DEFAULT '',
+  receipt_password TEXT NOT NULL DEFAULT ''
+);
+
+CREATE TABLE IF NOT EXISTS items (
+  id TEXT PRIMARY KEY,
+  user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  name TEXT NOT NULL,
+  barcode TEXT NOT NULL DEFAULT '',
+  is_valid_barcode BOOLEAN NOT NULL DEFAULT FALSE,
+  is_barcode_checked BOOLEAN NOT NULL DEFAULT FALSE,
+  price DOUBLE PRECISION NOT NULL DEFAULT 0,
+  stock DOUBLE PRECISION NOT NULL DEFAULT 0,
+  off_price DOUBLE PRECISION NOT NULL DEFAULT 0,
+  expiry_dates BIGINT[] NOT NULL DEFAULT '{}'
+);
+
+CREATE TABLE IF NOT EXISTS receipts (
+  id TEXT PRIMARY KEY,
+  user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  total_price DOUBLE PRECISION NOT NULL,
+  date_ms BIGINT NOT NULL,
+  comment TEXT NOT NULL DEFAULT '',
+  action_taken TEXT NOT NULL DEFAULT '',
+  is_resolved BOOLEAN NOT NULL DEFAULT TRUE,
+  transaction_mode TEXT NOT NULL DEFAULT '',
+  send_code TEXT NOT NULL DEFAULT ''
+);
+
+CREATE TABLE IF NOT EXISTS receipt_items (
+  receipt_id TEXT NOT NULL REFERENCES receipts(id) ON DELETE CASCADE,
+  item_id TEXT NOT NULL REFERENCES items(id) ON DELETE CASCADE,
+  quantity DOUBLE PRECISION NOT NULL,
+  off_price DOUBLE PRECISION NOT NULL DEFAULT 0,
+  PRIMARY KEY (receipt_id, item_id)
+);
