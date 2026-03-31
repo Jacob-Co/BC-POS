@@ -1,0 +1,158 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "BC POS Backend API (C++/Drogon)",
+    "version": "1.0.0"
+  },
+  "servers": [
+    { "url": "http://localhost:3001" }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "ResultBool": {
+        "type": "object",
+        "properties": {
+          "result": { "type": "boolean" }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/api/users/": {
+      "post": { "summary": "Register user", "responses": { "200": { "description": "OK" } } },
+      "delete": {
+        "summary": "Delete user",
+        "security": [{ "bearerAuth": [] }],
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/api/users/login": {
+      "post": { "summary": "Email login", "responses": { "200": { "description": "JWT" } } }
+    },
+    "/api/users/google-login": {
+      "post": { "summary": "Google login", "responses": { "200": { "description": "JWT" } } }
+    },
+    "/api/users/details": {
+      "get": {
+        "summary": "Get user details",
+        "security": [{ "bearerAuth": [] }],
+        "responses": { "200": { "description": "User details" } }
+      }
+    },
+    "/api/users/password": {
+      "patch": {
+        "summary": "Edit password",
+        "security": [{ "bearerAuth": [] }],
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/api/users/all": {
+      "get": {
+        "summary": "Get all users (admin)",
+        "security": [{ "bearerAuth": [] }],
+        "responses": { "200": { "description": "Users list" } }
+      }
+    },
+    "/api/items/": {
+      "post": {
+        "summary": "Create item",
+        "security": [{ "bearerAuth": [] }],
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/api/items/no-barcode": {
+      "post": {
+        "summary": "Create item without barcode",
+        "security": [{ "bearerAuth": [] }],
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/api/items/all": {
+      "get": {
+        "summary": "Get all items",
+        "security": [{ "bearerAuth": [] }],
+        "responses": { "200": { "description": "Items" } }
+      }
+    },
+    "/api/items/invalid-barcodes": {
+      "get": {
+        "summary": "Get invalid barcodes",
+        "security": [{ "bearerAuth": [] }],
+        "responses": { "200": { "description": "Items" } }
+      }
+    },
+    "/api/items/csv-inventory": {
+      "get": {
+        "summary": "Get inventory CSV",
+        "security": [{ "bearerAuth": [] }],
+        "responses": { "200": { "description": "CSV payload" } }
+      }
+    },
+    "/api/items/{itemId}": {
+      "patch": {
+        "summary": "Edit item",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "name": "itemId", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "OK" } }
+      },
+      "delete": {
+        "summary": "Delete item",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "name": "itemId", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/api/receipts/": {
+      "post": { "summary": "Record receipt", "security": [{ "bearerAuth": [] }], "responses": { "200": { "description": "OK" } } }
+    },
+    "/api/receipts/hardCode": {
+      "post": { "summary": "Record hard-coded receipt", "security": [{ "bearerAuth": [] }], "responses": { "200": { "description": "OK" } } }
+    },
+    "/api/receipts/multiple": {
+      "post": { "summary": "Record multiple receipts", "security": [{ "bearerAuth": [] }], "responses": { "200": { "description": "OK" } } }
+    },
+    "/api/receipts/dates/{startUNIX}/{endUNIX}": {
+      "get": {
+        "summary": "Get receipts by date range",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "startUNIX", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "endUNIX", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": { "200": { "description": "Receipts" } }
+      }
+    },
+    "/api/receipts/sales/{UNIX}": {
+      "get": {
+        "summary": "Get sales summary",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "name": "UNIX", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "Sales" } }
+      }
+    },
+    "/api/receipts/unresolved": {
+      "get": { "summary": "Get unresolved receipts", "security": [{ "bearerAuth": [] }], "responses": { "200": { "description": "Receipts" } } }
+    },
+    "/api/receipts/{receiptId}": {
+      "patch": {
+        "summary": "Edit receipt",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "name": "receiptId", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "OK" } }
+      },
+      "delete": {
+        "summary": "Delete receipt",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "name": "receiptId", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "OK" } }
+      }
+    }
+  }
+}
