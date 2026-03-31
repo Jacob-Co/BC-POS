@@ -18,11 +18,6 @@ void UserController::registerRoutes() {
         {Post});
 
     app().registerHandler(
-        "/api/users/google-login",
-        [](const HttpRequestPtr &, std::function<void(const HttpResponsePtr &)> &&callback) { callback(jsonResult("mock-jwt-token")); },
-        {Post});
-
-    app().registerHandler(
         "/api/users/details",
         [](const HttpRequestPtr &req, std::function<void(const HttpResponsePtr &)> &&callback) {
             if (!isAuthorized(req)) {

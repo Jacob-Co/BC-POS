@@ -36,9 +36,6 @@
     "/api/users/login": {
       "post": { "summary": "Email login", "responses": { "200": { "description": "JWT" } } }
     },
-    "/api/users/google-login": {
-      "post": { "summary": "Google login", "responses": { "200": { "description": "JWT" } } }
-    },
     "/api/users/details": {
       "get": {
         "summary": "Get user details",
