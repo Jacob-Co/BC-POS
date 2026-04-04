@@ -13,6 +13,11 @@ A web POS System with a camera barcode scanner.
 4. [Creating receipt using a barcode scanner](https://www.youtube.com/watch?v=549qemxSngo&list=PLhQ0s_dzBuSFRvD5VocWivV9D_LLenSxb&index=6&ab_channel=JacobCo)
 5. [Offline sending of receipts](https://www.youtube.com/watch?v=_h8gHeFe0xs&list=PLhQ0s_dzBuSFRvD5VocWivV9D_LLenSxb&index=5&ab_channel=JacobCo)
 
+
+## C++ Backend (Drogon)
+
+A C++20 Drogon backend is available in `backend-cpp/` with Swagger UI at `/api/docs`.
+
 # Installation
 
 1. Requires node version 16
